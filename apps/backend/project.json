@@ -1,0 +1,14 @@
+{
+  "name": "backend",                          
+  "sourceRoot": "apps/backend/src",            
+  "projectType": "application",                
+  "targets": {
+    "serve": {                                 
+      "executor": "nx:run-commands",          
+      "options": {
+        "command": "mvn spring-boot:run",       
+        "cwd": "apps/backend"                   
+      }
+    }
+  }
+}

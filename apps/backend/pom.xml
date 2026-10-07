@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.0</version><!-- Versión estable más reciente a la fecha; fija automáticamente las versiones compatibles de Hibernate, Jackson, Tomcat, etc.(gestión de versiones vía BOM. -->
+        <relativePath/>
+    </parent>
+
+    <groupId>com.empresa.gc</groupId>
+    <artifactId>gc-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging><!--JAR|WAER-->
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Versiones centralizadas — buena práctica para no repetirlas -->
+        <junit.version>5.10.2</junit.version>
+        <mockito.version>5.11.0</mockito.version>
+        <assertj.version>3.25.3</assertj.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+        </dependency>
+
+
+        <dependency>
+        <!-- Inicialización de Tomcat para interacción con Angularm-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+        <!--Marca el starter de Tomcat embebido como provided (se usa solo para compilar, pero no se empaqueta dentro del WAR — el Tomcat externo ya lo provee):-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+            <!-- Validación con Bean Validation (jakarta.validation.constraints).
+                        Necesario para @NotBlank, @Email, @PositiveOrZero usados en la
+                        entidad. Trae Hibernate Validator como implementación. -->
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-validation</artifactId>
+                    </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-rest-webmvc</artifactId>
+                    <!-- versión compatible con tu Spring Boot; normalmente la gestiona el BOM -->
+                </dependency>
+                                    <!-- MapStruct API -->
+                <dependency>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct</artifactId>
+                    <version>1.6.3</version>
+                </dependency>
+
+                <!-- Procesador de anotaciones (solo en compilación) -->
+                <dependency>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct-processor</artifactId>
+                    <version>1.6.3</version>
+                    <scope>provided</scope>
+                </dependency>
+
+        <!-- Lombok para generar automáticamente getters, setters, constructores, etc. -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JPA/Hibernate para entidades @Entity, @Table, @ManyToOne, etc. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- Jackson annotations para @JsonIgnore y serialización JSON. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <!-- ── JUnit 5 ─────────────────────────────────────────────────── -->
+        <!-- Motor de testing: @Test, @BeforeEach, @TempDir, etc.          -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ── Mockito ─────────────────────────────────────────────────── -->
+        <!-- Mocking: @Mock, @InjectMocks, @ExtendWith(MockitoExtension)   -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Integración Mockito + JUnit 5                                  -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ── AssertJ ─────────────────────────────────────────────────── -->
+        <!-- Aserciones fluidas: assertThat(...).isEqualTo(...)             -->
+        <!-- Más expresivo que los assertEquals de JUnit puro               -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- ── Maven Surefire ──────────────────────────────────────── -->
+            <!-- Necesario para que mvn test ejecute JUnit 5 correctamente  -->
+            <!-- Sin este plugin, Maven solo detecta JUnit 4 por defecto    -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- Flags de JVM aplicados a TODOS los tests           -->
+                    <!-- Permiten observar el GC durante mvn test           -->
+                    <argLine>
+                        -Xms32m
+                        -Xmx128m
+                        -XX:+UseG1GC
+                        -Xlog:gc*:file=target/gc-test.log:time,uptime
+                        -XX:+HeapDumpOnOutOfMemoryError
+                        -XX:HeapDumpPath=target/heap-dump.hprof
+                    </argLine>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- Lombok + MapStruct juntos -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- ── Maven Compiler ──────────────────────────────────────── -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <encoding>UTF-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.34</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>1.6.3</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

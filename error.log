@@ -1,0 +1,14 @@
+
+Identidad del autor desconocido
+
+*** Por favor cuéntame quién eres.
+
+Ejecuta
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Tu Nombre"
+
+para configurar la identidad por defecto de tu cuenta.
+Omite --global para configurar tu identidad solo en este repositorio.
+
+fatal: no es posible auto-detectar la dirección de correo (se obtuvo 'cybgor@KAHLUCMAC.(none)')
