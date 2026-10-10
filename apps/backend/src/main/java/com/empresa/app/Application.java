@@ -36,10 +36,5 @@ public class Application {
         System.out.println("4"+ candidatoDTO.CandidatoDtoToString());
         */
     }
-
-    @GetMapping ("/version")
-    public String version(){
-        return "1.0.0";
-    }
  
 }

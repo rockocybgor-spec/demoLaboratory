@@ -14,9 +14,8 @@ public class VotosPorPartido implements Serializable{
 
     @Id
     @NotBlank
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="dActaEscrutinio")
-    private String dActaEscrutinio;
+    @Column(name="dCasilla")
+    private String dCasilla;
     @Column(name = "dPartido")
     private String dPartido;
     @Column (name = "conteoCaptura")
@@ -24,11 +23,11 @@ public class VotosPorPartido implements Serializable{
     @Column (name = "conteoAutimatizado")
     private Integer conteoAutomatizado;
     
-    public String getdActaDeEscrutinio() {
-        return dActaEscrutinio;
+    public String getdCasilla() {
+        return dCasilla;
     }
-    public void setDActaDeEscrutinio(String dActaEscrutinio) {
-        this.dActaEscrutinio = dActaEscrutinio;
+    public void setdCasilla(String dCasilla) {
+        this.dCasilla = dCasilla;
     }
     
     public String getdPartido() {

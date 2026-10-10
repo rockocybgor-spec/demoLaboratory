@@ -5,11 +5,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "FUNCIONARIOCASILLA")
-@PrimaryKeyJoinColumn(name = "dElector")
 @DiscriminatorValue("FUNCIONARIOCASILLA")
 public class FuncionarioCasilla extends Elector {
 
-    @Column (name = "idElector")
+    @Column (name = "dElector")
     private String dElector;
     
     @Column(name = "dCasilla")
@@ -34,8 +33,8 @@ public class FuncionarioCasilla extends Elector {
         this.confirma = confirma;
     }
 
-    public FuncionarioCasilla(String idElector, String dCasilla, Boolean confirma, String dElector) {
-        this.dElector = idElector;
+    public FuncionarioCasilla(String dElector, String dCasilla, Boolean confirma) {
+        this.dElector = dElector;
         this.dCasilla = dCasilla;
         this.confirma = confirma;
     }

@@ -1,0 +1,47 @@
+
+    <div class="acceso-container">
+      <h2>Bienvenido al sistema</h2>
+
+      @if (!mostrarLogin()) {
+        <div class="opciones">
+          <button (click)="seleccionarConLogin('boton1')">Opción 1</button>
+          <button (click)="seleccionarConLogin('boton2')">Opción 2</button>
+          <button (click)="seleccionarSinLogin()">Opción 3</button>
+        </div>
+      }
+
+      @if (mostrarLogin()) {
+        <div class="login">
+          <p>Seleccionaste: <strong>{{ valorSeleccionado() }}</strong></p>
+
+          <input
+            type="text"
+            placeholder="ingrese Usuario"
+            [value]="usuario()"
+            (input)="usuario.set($any($event.target).value)"
+          />
+
+          <input
+            type="password"
+            placeholder="ingrese Contraseña"
+            [value]="contrasenia()"
+            (input)="contrasenia.set($any($event.target).value)"
+          />
+
+          <button (click)="enviarAcceso()" [disabled]="cargando()">
+            {{ cargando() ? 'Accediendo...' : 'Acceder' }}
+          </button>
+
+          <button (click)="cancelar()">Cancelar</button>
+        </div>
+      }
+
+      @if (resultado()) {
+        <p class="resultado">Respuesta del servidor: {{ resultado() }}</p>
+      }
+
+      @if (error()) {
+        <p class="error">{{ error() }}</p>
+      }
+    </div>
+  
